@@ -1,7 +1,7 @@
-import { SlashCommandBuilder, ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from 'discord.js';
-import { createServerConfig } from '../lib/serverConfigs.js';
+const { SlashCommandBuilder, ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
+const { createServerConfig } = require('../lib/serverConfigs.js');
 
-export default {
+module.exports = {
     cooldown: 5,
     administrator: true,
     data: new SlashCommandBuilder()

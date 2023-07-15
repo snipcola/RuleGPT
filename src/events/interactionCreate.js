@@ -1,7 +1,7 @@
-import { Events, Collection, PermissionsBitField } from 'discord.js';
-import { updateServerConfig } from '../lib/serverConfigs.js';
+const { Events, Collection, PermissionsBitField } = require('discord.js');
+const { updateServerConfig } = require('../lib/serverConfigs.js');
 
-export default {
+module.exports = {
     name: Events.InteractionCreate,
     async execute (interaction) {
         if (interaction.isChatInputCommand()) {

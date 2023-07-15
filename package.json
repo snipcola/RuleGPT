@@ -5,9 +5,7 @@
     "author": "Snipcola <snipcola@gmail.com>",
     "repository": "https://github.com/snipcola/rulegpt",
     "main": "src/index.js",
-    "bin": "src/index.js",
     "license": "MIT",
-    "type": "module",
     "scripts": {
         "start": "node .",
         "dev": "yarn nodemon -q --watch \"src\" --ext \"*\" --exec \"cls && yarn start\"",

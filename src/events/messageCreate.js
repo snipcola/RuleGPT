@@ -1,9 +1,9 @@
-import { OpenAIApi, Configuration } from 'openai';
+const { OpenAIApi, Configuration } = require('openai');
 
-import { Events } from 'discord.js';
-import { addWarning, createServerConfig, getWarnings } from '../lib/serverConfigs.js';
+const { Events } = require('discord.js');
+const { addWarning, createServerConfig, getWarnings } = require('../lib/serverConfigs.js');
 
-export default {
+module.exports = {
     name: Events.MessageCreate,
     async execute (message) {
         const config = await createServerConfig(message.guild.id);

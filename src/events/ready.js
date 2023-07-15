@@ -1,6 +1,6 @@
-import { Events } from 'discord.js';
+const { Events } = require('discord.js');
 
-export default {
+module.exports = {
     name: Events.ClientReady,
     once: true,
     execute (client) {

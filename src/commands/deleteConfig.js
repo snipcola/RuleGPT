@@ -1,7 +1,7 @@
-import { SlashCommandBuilder } from 'discord.js';
-import {  removeServerConfig } from '../lib/serverConfigs.js';
+const { SlashCommandBuilder } = require('discord.js');
+const { removeServerConfig } = require('../lib/serverConfigs.js');
 
-export default {
+module.exports = {
     cooldown: 5,
     administrator: true,
     data: new SlashCommandBuilder()
