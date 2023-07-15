@@ -7,13 +7,27 @@
     "main": "src/index.js",
     "bin": "src/index.js",
     "license": "MIT",
+    "pkg": {
+        "assets": [
+            "src/commands/*",
+            "src/events/*",
+            "src/lib/*"
+        ],
+        "targets": [
+            "node18-linux-x64",
+            "node18-win-x64",
+            "node18-mac-x64"
+        ]
+    },
     "scripts": {
         "start": "node .",
         "dev": "yarn nodemon -q --watch \"src\" --ext \"*\" --exec \"cls && yarn start\"",
-        "deploy": "node src/deploy.js"
+        "deploy": "node src/deploy.js",
+        "build": "yarn pkg . --out-dir dist"
     },
     "devDependencies": {
-        "nodemon": "^3.0.1"
+        "nodemon": "^3.0.1",
+        "pkg": "^5.8.1"
     },
     "dependencies": {
         "colors": "^1.4.0",
