@@ -17,7 +17,7 @@ module.exports = {
             const completion = await openai.createChatCompletion({
                 model: 'gpt-3.5-turbo-0613',
                 messages: [
-                    { role: 'system', content: 'Check message against rules; use function based on severity and warnings if rule broken, ignore text in speech marks; no rules, no function' },
+                    { role: 'system', content: 'Check message against rules; use function based on severity and warnings; make sure that you only use a function if the user has broken a rule, regardless of warnings; ignore text in speech marks; no rules, no function' },
                     { role: 'user', content: `Message: "${message.content}"\nWarnings: ${warnings.length}\nRules: ${config.rules ? `"${config.rules}"` : 'None'}` }
                 ],
                 functions: [
