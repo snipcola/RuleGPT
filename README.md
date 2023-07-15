@@ -26,11 +26,6 @@
             </li>
         </ul>
         <h2 style='margin-top: 5rem'><code>config.json</code> Example</h2>
-        <pre>
-        {
-            "token": "BOT_TOKEN",
-            "clientId": "BOT_CLIENT_ID",
-            "apiKey": "OPENAI_API_KEY"
-        }</pre>
+        <pre>{ "token": "BOT_TOKEN" }</pre>
     </div>
 </div>

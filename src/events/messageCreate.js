@@ -1,20 +1,17 @@
 import { OpenAIApi, Configuration } from 'openai';
 
 import { Events } from 'discord.js';
-import { getConfig } from '../lib/config.js';
 import { addWarning, createServerConfig, getWarnings } from '../lib/serverConfigs.js';
-
-const { apiKey } = await getConfig();
-
-const openai = new OpenAIApi(new Configuration({ apiKey: apiKey || null }))
 
 export default {
     name: Events.MessageCreate,
     async execute (message) {
-        if (!apiKey || message.author.bot || message.guild.ownerId === message.author.id) return;
-
         const config = await createServerConfig(message.guild.id);
         const warnings = await getWarnings(message.guild.id, message.author.id);
+
+        if (message.author.bot || message.guild.ownerId === message.author.id || !config.apiKey) return;
+
+        const openai = new OpenAIApi(new Configuration({ apiKey: config.apiKey || null }))
 
         try {
             const completion = await openai.createChatCompletion({

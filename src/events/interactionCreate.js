@@ -62,12 +62,11 @@ export default {
             if (id === 'config') {
                 const fields = interaction.fields?.fields;
                 const rules = fields?.get('rules')?.value;
+                const apiKey = fields?.get('api-key')?.value;
 
-                if (!rules) return await interaction.reply({ content: '❌ No rules value specified', ephemeral: true });
+                const updatedConfig = await updateServerConfig(interaction.guildId, { rules: rules || null, apiKey: apiKey || null });
 
-                const updatedRules = await updateServerConfig(interaction.guildId, { rules });
-
-                if (updatedRules) return await interaction.reply({ content: '✅ Updated configuration', ephemeral: true })
+                if (updatedConfig) return await interaction.reply({ content: '✅ Updated configuration', ephemeral: true })
                 else return await interaction.reply({ content: '❌ Failed to update configuration', ephemeral: true });
             };
         };

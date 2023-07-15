@@ -11,7 +11,12 @@ export async function resetServerConfigs (path = 'config-servers.json') {
 };
 
 export async function getServerConfigs (path = 'config-servers.json') {
-    const file = await readFile(path, 'utf8');
+    let file;
+
+    try { file = await readFile(path, 'utf8') }
+    catch { await resetServerConfigs() };
+
+    file = await readFile(path, 'utf8');
 
     try {
         const json = JSON.parse(file);
@@ -47,7 +52,7 @@ export async function createServerConfig (serverId) {
 
     if (existingConfig) return existingConfig;
     
-    serverConfigs.push({ id: serverId, rules: 'None', warnings: [] });
+    serverConfigs.push({ id: serverId, rules: null, apiKey: null, warnings: [] });
     await saveServerConfigs();
 
     return await getServerConfig(serverId);

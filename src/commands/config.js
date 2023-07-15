@@ -18,9 +18,17 @@ export default {
 			.setCustomId('rules')
 			.setLabel('Server Rules')
 			.setStyle(TextInputStyle.Paragraph)
+            .setRequired(false)
 			.setValue(config.rules || '');
 
-        modal.addComponents(new ActionRowBuilder().addComponents(rules));
+        const apiKey = new TextInputBuilder()
+            .setCustomId('api-key')
+            .setLabel('OpenAI API Key')
+            .setStyle(TextInputStyle.Short)
+            .setRequired(false)
+            .setValue(config.apiKey || '');
+
+        modal.addComponents(new ActionRowBuilder().addComponents(rules), new ActionRowBuilder().addComponents(apiKey));
 
         await interaction.showModal(modal);
     }

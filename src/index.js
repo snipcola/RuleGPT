@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 import { readdir } from 'fs/promises';
 
 import { getConfig } from './lib/config.js';
-import { Client, GatewayIntentBits, Collection } from 'discord.js';
+import { Client, GatewayIntentBits, Collection, ActivityType } from 'discord.js';
 
 // Variables
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -15,13 +15,16 @@ const client = new Client({
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent
-    ]
+    ],
+    presence: {
+        activities: [{ type: ActivityType.Watching, name: 'over messages 🛡️' }]
+    }
 });
 
 // Config
-const { token, clientId, apiKey } = await getConfig();
+const { token } = await getConfig();
 
-if (!token || !clientId || !apiKey) {
+if (!token) {
     console.log('The config is invalid'.red);
     process.exit(1);
 };
