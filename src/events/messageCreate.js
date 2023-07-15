@@ -145,7 +145,7 @@ module.exports = {
 
             async function ban ({ member, message_delete_seconds, reason, rule_broken, delete_message }) {
                 await member.ban({ deleteMessageSeconds: message_delete_seconds, reason });
-                await message.channel.send(`⚠️ <@${message.author.id}> has been banned and their messages from the last **${message_delete_seconds / 60}** have been deleted.\n\nReason: **${reason}**\nRule Broken: **${rule_broken}**\nMessage Deleted: **${delete_message ? 'Yes' : 'No'}**`);
+                await message.channel.send(`⚠️ <@${message.author.id}> has been banned and their messages from the last **${message_delete_seconds / 60}** minutes have been deleted.\n\nReason: **${reason}**\nRule Broken: **${rule_broken}**\nMessage Deleted: **${delete_message ? 'Yes' : 'No'}**`);
                 if (delete_message) await message.delete();
             };
 
