@@ -9,9 +9,9 @@ import { getConfig } from './lib/config.js';
 import { REST, Routes } from 'discord.js';
 
 // Config
-const { token, clientId, model } = await getConfig();
+const { token, clientId } = await getConfig();
 
-if (!token || !clientId || !model) {
+if (!token || !clientId) {
     console.log('The config is invalid'.red);
     process.exit(1);
 };

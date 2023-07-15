@@ -6,21 +6,22 @@ import { fileURLToPath } from 'url';
 import { readdir } from 'fs/promises';
 
 import { getConfig } from './lib/config.js';
-import { Client, Events, GatewayIntentBits, Collection } from 'discord.js';
+import { Client, GatewayIntentBits, Collection } from 'discord.js';
 
 // Variables
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const client = new Client({
     intents: [
-        GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildMembers
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent
     ]
 });
 
 // Config
-const { token, clientId, model } = await getConfig();
+const { token, clientId, model, apiKey } = await getConfig();
 
-if (!token || !clientId, !model) {
+if (!token || !clientId || !model || !apiKey) {
     console.log('The config is invalid'.red);
     process.exit(1);
 };
@@ -39,9 +40,7 @@ for (const file of commandFiles) {
     if (command && 'data' in command && 'execute' in command) {
         console.log(commandPath + ' loaded'.green);
         client.commands.set(command.data.name, command);
-    } else {
-        console.log(commandPath + ' missing properties'.red);
-    };
+    } else console.log(commandPath + ' missing properties'.red);
 };
 
 // Events
@@ -53,7 +52,10 @@ for (const file of eventFiles) {
     const eventPath = path.join(events, file);
     const event = (await import('file:' + eventPath)).default;
 
-    client[event.once ? 'once' : 'on'](event.name, (...args) => event.execute(...args));
+    if (event && 'name' in event && 'execute' in event) {
+        console.log(eventPath + ' loaded'.green);
+        client[event.once ? 'once' : 'on'](event.name, (...args) => event.execute(...args));   
+    } else console.log(eventPath + ' missing properties'.red);
 };
 
 // Cooldowns
