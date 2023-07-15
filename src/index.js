@@ -19,9 +19,9 @@ const client = new Client({
 });
 
 // Config
-const { token, clientId, model, apiKey } = await getConfig();
+const { token, clientId, apiKey } = await getConfig();
 
-if (!token || !clientId || !model || !apiKey) {
+if (!token || !clientId || !apiKey) {
     console.log('The config is invalid'.red);
     process.exit(1);
 };
