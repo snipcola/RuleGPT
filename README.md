@@ -31,7 +31,6 @@
             "token": "BOT_TOKEN",
             "clientId": "BOT_CLIENT_ID",
             "apiKey": "OPENAI_API_KEY"
-        }
-        </pre>
+        }</pre>
     </div>
 </div>
