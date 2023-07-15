@@ -1,0 +1,16 @@
+{
+    "name": "rulegpt",
+    "version": "0.0.1",
+    "description": "A bot utilising the OpenAI api to evaluate messages against predefined rules",
+    "author": "Snipcola <snipcola@gmail.com>",
+    "repository": "https://github.com/snipcola/rulegpt",
+    "main": "src/index.js",
+    "type": "module",
+    "scripts": {
+        "start": "node .",
+        "dev": "yarn nodemon -q --watch \"src\" --ext \"*\" --exec \"clear && yarn start\""
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.1"
+    }
+}
