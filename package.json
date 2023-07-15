@@ -5,6 +5,7 @@
     "author": "Snipcola <snipcola@gmail.com>",
     "repository": "https://github.com/snipcola/rulegpt",
     "main": "src/index.js",
+    "bin": "src/index.js",
     "license": "MIT",
     "scripts": {
         "start": "node .",
