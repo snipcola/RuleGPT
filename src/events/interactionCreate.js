@@ -1,9 +1,13 @@
-import { Events, Collection } from 'discord.js';
+import { Events, Collection, ChannelType } from 'discord.js';
 
 export default {
     name: Events.InteractionCreate,
     async execute (interaction) {
         if (!interaction.isChatInputCommand()) return;
+        if (!interaction.guildId) return interaction.reply({
+            content: '❌ This bot does not support direct messages.',
+            ephemeral: true
+        });
 
         const command = interaction.client.commands.get(interaction.commandName);
     
