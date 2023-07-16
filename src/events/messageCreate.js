@@ -25,7 +25,7 @@ module.exports = {
                 functions: [
                     {
                         name: 'warn',
-                        description: 'Warn',
+                        description: 'Warn (use if 0-3 warnings and broken rule)',
                         parameters: {
                             type: 'object',
                             properties: {
@@ -51,7 +51,7 @@ module.exports = {
                     },
                     {
                         name: 'mute',
-                        description: 'Mute (use if 3+ warnings and broken rule)',
+                        description: 'Mute (use if 3-6 warnings and broken rule)',
                         parameters: {
                             type: 'object',
                             properties: {
@@ -81,7 +81,7 @@ module.exports = {
                     },
                     {
                         name: 'kick',
-                        description: 'Kick (use if 6+ warnings and broken rule)',
+                        description: 'Kick (use if 6-9 warnings and broken rule)',
                         parameters: {
                             type: 'object',
                             properties: {
@@ -159,7 +159,7 @@ module.exports = {
 
             async function ban ({ offending_content, member, delete_messages, reason, rule_broken }) {
                 await member.ban({ deleteMessageSeconds: delete_messages ? 60 * 60 * 24 * 7 : 0, reason });
-                await message.channel.send(`⚠️ <@${message.author.id}> has been banned${delete_messages ? ' and their messages from the last 7 days have been deleted' : ''}.\n\nOffending Content: "**${offending_content}**"\nReason: **${reason}**\nRule Broken: **${rule_broken}**\nMessage Deleted: **${delete_message ? 'Yes' : 'No'}**`);
+                await message.channel.send(`⚠️ <@${message.author.id}> has been banned${delete_messages ? ' and their messages from the last 7 days have been deleted' : ''}.\n\nOffending Content: "**${offending_content}**"\nReason: **${reason}**\nRule Broken: **${rule_broken}**`);
             };
 
             const functions = { warn, mute, kick, ban };
