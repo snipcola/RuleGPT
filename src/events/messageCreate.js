@@ -187,6 +187,6 @@ module.exports = {
                     console.log('[RuleGPT] '.cyan + `Function failed (name: ${name}, member: ${member.user.discriminator === '0' ? member.user.username : member.user.tag} (${member.user.id}), ${Object.entries(args).map(([key, value]) => `${key}: ${value}`).join(', ')})`.red);
                 };
             } else console.log(`[${member.user.discriminator === '0' ? member.user.username : member.user.tag}]: ${message.content}`.green);
-        } catch (err) { console.log('[RuleGPT] '.cyan + err.red) };
+        } catch (err) { console.log('[RuleGPT] '.cyan + `${err}`.red) };
     }
 };
