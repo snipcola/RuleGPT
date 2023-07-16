@@ -80,7 +80,7 @@ async function createServerConfig (serverId) {
 
     if (existingConfig) return existingConfig;
     
-    serverConfigs.push({ id: serverId, rules: null, apiKey: null, warnings: [], admins: [] });
+    serverConfigs.push({ id: serverId, rules: null, apiKey: null, warnings: [], admins: [], enabled: true });
     await saveServerConfigs();
 
     return await getServerConfig(serverId);
@@ -181,6 +181,27 @@ async function removeAdmin (serverId, userId) {
     });
 };
 
+async function enable (serverId) {
+    const serverConfig = await getServerConfig(serverId);
+    if (!serverConfig) return false;
+
+    return await updateServerConfig(serverId, { enabled: true });
+};
+
+async function disable (serverId) {
+    const serverConfig = await getServerConfig(serverId);
+    if (!serverConfig) return false;
+
+    return await updateServerConfig(serverId, { enabled: false });
+};
+
+async function getEnabled (serverId) {
+    const serverConfig = await getServerConfig(serverId);
+    if (!serverConfig) return false;
+
+    return serverConfig.enabled;
+};
+
 exports.resetServerConfigs = resetServerConfigs;
 exports.resetServerConfigsSync = resetServerConfigsSync;
 exports.getServerConfigs = getServerConfigs;
@@ -199,3 +220,6 @@ exports.resetAdmins = resetAdmins;
 exports.findAdmin = findAdmin;
 exports.addAdmin = addAdmin;
 exports.removeAdmin = removeAdmin;
+exports.enable = enable;
+exports.disable = disable;
+exports.getEnabled = getEnabled;

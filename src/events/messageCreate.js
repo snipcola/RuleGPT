@@ -11,7 +11,7 @@ module.exports = {
         const warnings = await getWarnings(message.guild.id, message.author.id);
         const administrators = [...global.administrators, ...config.admins, message.guild.ownerId];
 
-        if (message.author.bot || administrators.includes(message.author.id) || !config.apiKey) return;
+        if (message.author.bot || administrators.includes(message.author.id) || !config.apiKey || !config.enabled) return;
 
         const openai = new OpenAIApi(new Configuration({ apiKey: config.apiKey }));
 
