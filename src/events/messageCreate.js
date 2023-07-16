@@ -50,8 +50,8 @@ module.exports = {
                         }
                     },
                     {
-                        name: 'timeout',
-                        description: 'Timeout (use if 3+ warnings and broken rule)',
+                        name: 'mute',
+                        description: 'Mute (use if 3+ warnings and broken rule)',
                         parameters: {
                             type: 'object',
                             properties: {
@@ -145,7 +145,7 @@ module.exports = {
                 if (delete_message) await message.delete();
             };
 
-            async function timeout ({ offending_content, member, time, reason, rule_broken, delete_message }) {
+            async function mute ({ offending_content, member, time, reason, rule_broken, delete_message }) {
                 await member.timeout(time, reason);
                 await message.reply(`⚠️ <@${message.author.id}> has been timed out for **${(time / 1000) / 60}** minutes.\n\nOffending Content: "**${offending_content}**"\nReason: **${reason}**\nRule Broken: **${rule_broken}**\nMessage Deleted: **${delete_message ? 'Yes' : 'No'}**`);
                 if (delete_message) await message.delete();
@@ -162,7 +162,7 @@ module.exports = {
                 await message.channel.send(`⚠️ <@${message.author.id}> has been banned${delete_messages ? ' and their messages from the last 7 days have been deleted' : ''}.\n\nOffending Content: "**${offending_content}**"\nReason: **${reason}**\nRule Broken: **${rule_broken}**\nMessage Deleted: **${delete_message ? 'Yes' : 'No'}**`);
             };
 
-            const functions = { warn, timeout, kick, ban };
+            const functions = { warn, mute, kick, ban };
             const member = await message.guild.members.fetch(message.author.id);
 
             if (response.function_call?.name) {
