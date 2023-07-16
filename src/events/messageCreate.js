@@ -137,35 +137,59 @@ module.exports = {
 
             const response = completion.data.choices[0].message;
 
-            async function warn ({ offending_content, reason, rule_broken, delete_message }) {
+            async function warn ({ offending_content, member, reason, rule_broken, delete_message }) {
                 const addedWarning = await addWarning(message.guild.id, message.author.id, reason);
                 if (!addedWarning) return;
 
-                await message.reply(`⚠️ <@${message.author.id}> has been given a warning.\n\nOffending Content: \`\`${offending_content}\`\`\nReason: \`\`${reason}\`\`\nRule Broken: \`\`${rule_broken}\`\`\nMessage Deleted: \`\`${delete_message ? 'Yes' : 'No'}\`\``);
+                const warnings = await getWarnings(message.guild.id, message.author.id);
+                if (!warnings) return;
+
+                const messageContent = `Offending Content: \`\`${offending_content}\`\`\nReason: \`\`${reason}\`\`\nRule Broken: \`\`${rule_broken}\`\`\n\n**Disclaimer:** This bot is early in development; if you believe this is an error; send a screenshot to <@126870350507147264>.`;
+
+                try { await member.send(`⚠️ You have been given a warning in **${message.guild.name}**, you now have **${warnings.length}** warnings.\n\n${messageContent}`) }
+                catch { await message.reply(`⚠️ <@${message.author.id}> has been given a warning, they now have **${warnings.length}** warnings.\n\n${messageContent}`) };
+
                 if (delete_message) await message.delete();
             };
 
             async function mute ({ offending_content, member, time, reason, rule_broken, delete_message }) {
-                await addWarning(message.guild.id, message.author.id, reason);
+                const addedWarning = await addWarning(message.guild.id, message.author.id, reason);
+                if (!addedWarning) return;
+
+                const warnings = await getWarnings(message.guild.id, message.author.id);
+                if (!warnings) return;
+
+                const messageContent = `Offending Content: \`\`${offending_content}\`\`\nReason: \`\`${reason}\`\`\nRule Broken: \`\`${rule_broken}\`\`\n\n**Disclaimer:** This bot is early in development; if you believe this is an error; send a screenshot to <@126870350507147264>.`;
 
                 await member.timeout(time, reason);
-                await message.reply(`⚠️ <@${message.author.id}> has been timed out for \`\`${(time / 1000) / 60}\`\` minutes.\n\nOffending Content: \`\`${offending_content}\`\`\nReason: \`\`${reason}\`\`\nRule Broken: \`\`${rule_broken}\`\`\nMessage Deleted: \`\`${delete_message ? 'Yes' : 'No'}\`\``);
+
+                try { await member.send(`⚠️ You have been timed out for \`\`${(time / 1000) / 60}\`\` minutes in **${message.guild.name}**, you now have **${warnings.length}** warnings.\n\n${messageContent}`) }
+                catch { await message.reply(`⚠️ <@${message.author.id}> has been timed out for \`\`${(time / 1000) / 60}\`\` minutes, they now have **${warnings.length}** warnings.\n\n${messageContent}`) };
+
                 if (delete_message) await message.delete();
             };
 
             async function kick ({ offending_content, member, reason, rule_broken, delete_message }) {
-                await addWarning(message.guild.id, message.author.id, reason);
+                const addedWarning = await addWarning(message.guild.id, message.author.id, reason);
+                if (!addedWarning) return;
+
+                const warnings = await getWarnings(message.guild.id, message.author.id);
+                if (!warnings) return;
 
                 await member.kick(reason);
-                await message.reply(`⚠️ <@${message.author.id}> has been kicked.\n\nOffending Content: \`\`${offending_content}\`\`\nReason: \`\`${reason}\`\`\nRule Broken: \`\`${rule_broken}\`\`\nMessage Deleted: \`\`${delete_message ? 'Yes' : 'No'}\`\``);
+                await message.reply(`⚠️ <@${message.author.id}> has been kicked, they now have **${warnings.length}** warnings.\n\nOffending Content: \`\`${offending_content}\`\`\nReason: \`\`${reason}\`\`\nRule Broken: \`\`${rule_broken}\`\``);
                 if (delete_message) await message.delete();
             };
 
             async function ban ({ offending_content, member, delete_messages, reason, rule_broken }) {
-                await addWarning(message.guild.id, message.author.id, reason);
+                const addedWarning = await addWarning(message.guild.id, message.author.id, reason);
+                if (!addedWarning) return;
+
+                const warnings = await getWarnings(message.guild.id, message.author.id);
+                if (!warnings) return;
 
                 await member.ban({ deleteMessageSeconds: delete_messages ? 60 * 60 * 24 * 7 : 0, reason });
-                await message.channel.send(`⚠️ <@${message.author.id}> has been banned${delete_messages ? ' and their messages from the last 7 days have been deleted' : ''}.\n\nOffending Content: \`\`${offending_content}\`\`\nReason: \`\`${reason}\`\`\nRule Broken: \`\`${rule_broken}\`\``);
+                await message.channel.send(`⚠️ <@${message.author.id}> has been banned${delete_messages ? ' and their messages from the last 7 days have been deleted' : ''}, they now have **${warnings.length}** warnings.\n\nOffending Content: \`\`${offending_content}\`\`\nReason: \`\`${reason}\`\`\nRule Broken: \`\`${rule_broken}\`\``);
             };
 
             const functions = { warn, mute, kick, ban };
