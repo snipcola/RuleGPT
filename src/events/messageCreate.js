@@ -146,18 +146,24 @@ module.exports = {
             };
 
             async function mute ({ offending_content, member, time, reason, rule_broken, delete_message }) {
+                await addWarning(message.guild.id, message.author.id, reason);
+
                 await member.timeout(time, reason);
                 await message.reply(`⚠️ <@${message.author.id}> has been timed out for **${(time / 1000) / 60}** minutes.\n\nOffending Content: "**${offending_content}**"\nReason: **${reason}**\nRule Broken: **${rule_broken}**\nMessage Deleted: **${delete_message ? 'Yes' : 'No'}**`);
                 if (delete_message) await message.delete();
             };
 
             async function kick ({ offending_content, member, reason, rule_broken, delete_message }) {
+                await addWarning(message.guild.id, message.author.id, reason);
+
                 await member.kick(reason);
                 await message.reply(`⚠️ <@${message.author.id}> has been kicked.\n\nOffending Content: "**${offending_content}**"\nReason: **${reason}**\nRule Broken: **${rule_broken}**\nMessage Deleted: **${delete_message ? 'Yes' : 'No'}**`);
                 if (delete_message) await message.delete();
             };
 
             async function ban ({ offending_content, member, delete_messages, reason, rule_broken }) {
+                await addWarning(message.guild.id, message.author.id, reason);
+
                 await member.ban({ deleteMessageSeconds: delete_messages ? 60 * 60 * 24 * 7 : 0, reason });
                 await message.channel.send(`⚠️ <@${message.author.id}> has been banned${delete_messages ? ' and their messages from the last 7 days have been deleted' : ''}.\n\nOffending Content: "**${offending_content}**"\nReason: **${reason}**\nRule Broken: **${rule_broken}**`);
             };
@@ -167,7 +173,9 @@ module.exports = {
 
             if (response.function_call?.name) {
                 const name = response.function_call.name;
-                const args = JSON.parse(response.function_call.arguments);
+                let args = JSON.parse(response.function_call.arguments);
+
+                if (!args) return;
 
                 console.log(`[${member.user.discriminator === '0' ? member.user.username : member.user.tag}]: ${message.content}`.red);
 
@@ -179,6 +187,6 @@ module.exports = {
                     console.log('[RuleGPT] '.cyan + `Function failed (name: ${name}, member: ${member.user.discriminator === '0' ? member.user.username : member.user.tag} (${member.user.id}), ${Object.entries(args).map(([key, value]) => `${key}: ${value}`).join(', ')})`.red);
                 };
             } else console.log(`[${member.user.discriminator === '0' ? member.user.username : member.user.tag}]: ${message.content}`.green);
-        } catch (err) { console.log(err)};
+        } catch (err) { console.log('[RuleGPT] '.cyan + err.red) };
     }
 };
