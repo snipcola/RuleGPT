@@ -14,7 +14,7 @@ module.exports = {
         
             if (!command) return console.log(interaction.commandName + ' not found'.red);
 
-            if (command.administrator && !interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator)) return await interaction.reply({
+            if (command.administrator && !interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && !global.administrators.includes(interaction.user.id)) return await interaction.reply({
                 content: '⚠️ This command is for administrators only.',
                 ephemeral: true
             });

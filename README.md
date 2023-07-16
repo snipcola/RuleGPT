@@ -26,6 +26,6 @@
             </li>
         </ul>
         <h2 style='margin-top: 5rem'><code>config.json</code> Example</h2>
-        <pre>{ "token": "BOT_TOKEN" }</pre>
+        <pre>{ "token": "BOT_TOKEN", "administrators": ["USER_ID"] }</pre>
     </div>
 </div>

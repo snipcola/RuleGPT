@@ -22,7 +22,7 @@ async function main () {
     });
 
     // Config
-    const { token } = await getConfig();
+    const { token, administrators } = await getConfig();
 
     if (!token) {
         console.log('The config is invalid'.red);
@@ -73,6 +73,7 @@ async function main () {
 
     // Globals
     global.client = client;
+    global.administrators = administrators || [];
 };
 
 // Start
