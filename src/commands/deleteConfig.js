@@ -3,7 +3,7 @@ const { removeServerConfig } = require('../lib/serverConfigs.js');
 
 module.exports = {
     cooldown: 5,
-    administrator: true,
+    owner: true,
     data: new SlashCommandBuilder()
         .setName('deleteconfig')
         .setDescription('Deletes server configuration'),

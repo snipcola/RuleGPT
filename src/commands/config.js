@@ -3,7 +3,7 @@ const { createServerConfig } = require('../lib/serverConfigs.js');
 
 module.exports = {
     cooldown: 5,
-    administrator: true,
+    owner: true,
     data: new SlashCommandBuilder()
         .setName('config')
         .setDescription('Change server configuration'),
@@ -19,14 +19,16 @@ module.exports = {
 			.setLabel('Server Rules')
 			.setStyle(TextInputStyle.Paragraph)
             .setRequired(false)
-			.setValue(config.rules || '');
+            .setPlaceholder(`1. Don't swear.\n2. Don't be rude.\n3. Don't post links.`)
+			.setValue(config.rules || 'None');
 
         const apiKey = new TextInputBuilder()
             .setCustomId('api-key')
             .setLabel('OpenAI API Key')
             .setStyle(TextInputStyle.Short)
             .setRequired(false)
-            .setValue(config.apiKey || '');
+            .setPlaceholder('sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+            .setValue(config.apiKey || 'None');
 
         modal.addComponents(new ActionRowBuilder().addComponents(rules), new ActionRowBuilder().addComponents(apiKey));
 

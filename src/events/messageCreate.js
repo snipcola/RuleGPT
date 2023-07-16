@@ -9,10 +9,11 @@ module.exports = {
     async execute (message) {
         const config = await createServerConfig(message.guild.id);
         const warnings = await getWarnings(message.guild.id, message.author.id);
+        const administrators = [...global.administrators, ...config.admins, message.guild.ownerId];
 
-        if (message.author.bot || message.guild.ownerId === message.author.id || global.administrators.includes(message.author.id) || !config.apiKey) return;
+        if (message.author.bot || administrators.includes(message.author.id) || !config.apiKey) return;
 
-        const openai = new OpenAIApi(new Configuration({ apiKey: config.apiKey || null }));
+        const openai = new OpenAIApi(new Configuration({ apiKey: config.apiKey }));
 
         try {
             const completion = await openai.createChatCompletion({
@@ -162,6 +163,6 @@ module.exports = {
                     console.log('[RuleGPT] '.cyan + `Function failed (name: ${name}, member: ${member.user.discriminator === '0' ? member.user.username : member.user.tag} (${member.user.id}), ${Object.entries(args).map(([key, value]) => `${key}: ${value}`).join(', ')})`.red);
                 };
             } else console.log(`[${member.user.discriminator === '0' ? member.user.username : member.user.tag}]: ${message.content}`.green);
-        } catch {};
+        } catch (err) { console.log(err)};
     }
 };

@@ -80,7 +80,7 @@ async function createServerConfig (serverId) {
 
     if (existingConfig) return existingConfig;
     
-    serverConfigs.push({ id: serverId, rules: null, apiKey: null, warnings: [] });
+    serverConfigs.push({ id: serverId, rules: null, apiKey: null, warnings: [], admins: [] });
     await saveServerConfigs();
 
     return await getServerConfig(serverId);
@@ -140,6 +140,47 @@ async function removeWarning (serverId, userId, index) {
     });
 };
 
+async function getAdmins (serverId) {
+    const serverConfig = await getServerConfig(serverId);
+    if (!serverConfig) return false;
+    
+    return serverConfig.admins;
+};
+
+async function resetAdmins (serverId) {
+    const serverConfig = await getServerConfig(serverId);
+    if (!serverConfig) return false;
+
+    return await updateServerConfig(serverId, { admins: [] });
+};
+
+async function findAdmin (serverId, userId) {
+    const serverConfig = await getServerConfig(serverId);
+    if (!serverConfig) return false;
+
+    return serverConfig.admins.find((adminId) => adminId === userId);
+};
+
+async function addAdmin (serverId, userId) {
+    const serverConfig = await getServerConfig(serverId);
+    if (!serverConfig) return false;
+
+    const admin = await findAdmin(serverId, userId);
+
+    return admin || await updateServerConfig(serverId, {
+        admins: [...serverConfig.admins, userId]
+    });
+};
+
+async function removeAdmin (serverId, userId) {
+    const serverConfig = await getServerConfig(serverId);
+    if (!serverConfig) return false;
+
+    return await updateServerConfig(serverId, {
+        admins: serverConfig.admins.filter((adminId) => adminId !== userId)
+    });
+};
+
 exports.resetServerConfigs = resetServerConfigs;
 exports.resetServerConfigsSync = resetServerConfigsSync;
 exports.getServerConfigs = getServerConfigs;
@@ -153,3 +194,8 @@ exports.getWarnings = getWarnings;
 exports.resetWarnings = resetWarnings;
 exports.addWarning = addWarning;
 exports.removeWarning = removeWarning;
+exports.getAdmins = getAdmins;
+exports.resetAdmins = resetAdmins;
+exports.findAdmin = findAdmin;
+exports.addAdmin = addAdmin;
+exports.removeAdmin = removeAdmin;

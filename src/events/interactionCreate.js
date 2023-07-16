@@ -1,5 +1,5 @@
 const { Events, Collection, PermissionsBitField } = require('discord.js');
-const { updateServerConfig } = require('../lib/serverConfigs.js');
+const { updateServerConfig, createServerConfig } = require('../lib/serverConfigs.js');
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -11,11 +11,19 @@ module.exports = {
             });
     
             const command = interaction.client.commands.get(interaction.commandName);
-        
             if (!command) return console.log(interaction.commandName + ' not found'.red);
 
-            if (command.administrator && !interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && !global.administrators.includes(interaction.user.id)) return await interaction.reply({
+            const config = await createServerConfig(interaction.guild.id);
+            const administrators = [...global.administrators, ...config.admins, interaction.guild.ownerId];
+            const globalAdministrators = [...global.administrators, interaction.guild.ownerId];
+
+            if (command.administrator && !administrators.includes(interaction.user.id)) return await interaction.reply({
                 content: '⚠️ This command is for administrators only.',
+                ephemeral: true
+            });
+
+            if (command.owner && !globalAdministrators.includes(interaction.user.id)) return await interaction.reply({
+                content: '⚠️ This command is for the owner only.',
                 ephemeral: true
             });
     
