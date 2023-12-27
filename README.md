@@ -1,5 +1,4 @@
 <div style='display: flex; justify-content: center; gap: 30px; align-items: center; margin-bottom: 2rem; margin-top: 2rem' align='center'>
-    <img style='border-radius: 25%;' src='https://cdn.discordapp.com/avatars/1129626335610929184/1cf4206bf18c7b57d5b1d8ff912b5ec1.webp?size=128'>
     <div>
         <h3 style='font-size: 2rem; margin: 0;'>RuleGPT</h3>
         <p style='margin: 0; margin-top: .25rem'>Enforce your server rules with the power<br/>of artificial intelligence using the OpenAI</br>API.</p>
