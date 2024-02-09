@@ -1,4 +1,5 @@
 <div style='display: flex; justify-content: center; gap: 30px; align-items: center; margin-bottom: 2rem; margin-top: 2rem' align='center'>
+    <img style='border-radius: 25%;' width=100 height=100 src='./assets/icon.png'>
     <div>
         <h3 style='font-size: 2rem; margin: 0;'>RuleGPT</h3>
         <p style='margin: 0; margin-top: .25rem'>Enforce your server rules with the power<br/>of artificial intelligence using the OpenAI</br>API.</p>
