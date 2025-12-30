@@ -9,7 +9,7 @@
 <div style='display: flex; justify-content: center'>
     <div style='max-width: 40rem;'>
         <h2>Getting RuleGPT</h2>
-        <p>Either get it from the <a href="https://git.snipcola.com/snipcola/RuleGPT/releases">releases</a> or compile it yourself.</p>
+        <p>Either get it from the <a href="https://code.snipcola.st/snipcola/RuleGPT/releases">releases</a> or compile it yourself.</p>
         <h2>Features</h2>
         <ul>
             <li style='margin-top: 2.5rem'>
